@@ -1,0 +1,2 @@
+#+title: Nix-Cow
+This is a simple nix project to test declarative pulling from GitHub.
