@@ -1,2 +1,38 @@
 #+title: nix-cow
 This is a simple nix project to test declarative pulling from GitHub.
+
+* Adding a remote nix project to your system
+To add this to your nix configuration, we first need to get the hash of the project. Run the following in a bash shell:
+
+#+begin_src bash
+ nix-prefetch-git --url https://github.com/jeslie0/nix-cow.git
+#+end_src
+You should get something similar to the following, but with different information.
+#+RESULTS:
+| {               |                                                      |
+| url             | https://github.com/jeslie0/nix-cow.git               |
+| rev             | 8babdf1a33a34de5cd18c90e252eaca80c620bdd             |
+| date            | 2021-12-03T14:16:55-05:00                            |
+| path            | /nix/store/7whr8vaghjdmblz50rd1bxdfhc45dsdc-nix-cow  |
+| sha256          | 0c5dgy3abmirpkzqnbpa9bxxy0gx40n0vxr2i2wkpf1nhkxc24b0 |
+| fetchLFS        | false,                                               |
+| fetchSubmodules | false,                                               |
+| deepClone       | false,                                               |
+| leaveDotGit     | false                                                |
+| }               |                                                      |
+
+We can read off the hash from the sha256 line. In you nix configuration file (or homemanager file) add the following to your installed programs list:
+#+begin_src nix
+(import (fetchFromGitHub {
+  owner = "jeslie0";
+  repo = "nix-cow";
+  rev = "8babdf1a33a34de5cd18c90e252eaca80c620bdd";
+  sha256 = "0c5dgy3abmirpkzqnbpa9bxxy0gx40n0vxr2i2wkpf1nhkxc24b0";
+}))
+#+end_src
+
+Then, reloading your configuration should add the repo to your system. You can test this by running the following:
+#+begin_src shell
+  cow
+#+end_src
+This project is just a shell script with =cowsay= as a runtime dependency. Note that Nix won't install cowsay on your system, even though it is a dependency.
