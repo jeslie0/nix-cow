@@ -8,7 +8,7 @@ To add this to your nix configuration, we first need to get the hash of the proj
  nix-prefetch-git --url https://github.com/jeslie0/nix-cow.git
 #+end_src
 You should get something similar to the following, but with different information.
-#+RESULTS:
+#+begin_src
 | {               |                                                      |
 | url             | https://github.com/jeslie0/nix-cow.git               |
 | rev             | 8babdf1a33a34de5cd18c90e252eaca80c620bdd             |
@@ -20,6 +20,8 @@ You should get something similar to the following, but with different informatio
 | deepClone       | false,                                               |
 | leaveDotGit     | false                                                |
 | }               |                                                      |
+#+end_src
+
 
 We can read off the hash from the sha256 line. In you nix configuration file (or homemanager file) add the following to your installed programs list:
 #+begin_src nix
