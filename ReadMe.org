@@ -37,4 +37,20 @@ Then, reloading your configuration should add the repo to your system. You can t
 #+begin_src shell
   cow
 #+end_src
+
 This project is just a shell script with =cowsay= as a runtime dependency. Note that Nix won't install cowsay on your system, even though it is a dependency.
+
+* Adding a different commit
+We don't have to use the most recent commit of a remote project. We can specify the revision we would like for nix-prefetch-git to find out the correct sha256 hash. For example, we can take the initial commit of this project: (note that the rev can be found by clicking on the "rewind clock" button on GitHub)
+#+begin_src bash
+nix-prefetch-git --url https://github.com/jeslie0/nix-cow.git --rev de73a93328bdcc7dc46c7051d6bf2f59c48e2bf9
+#+end_src
+This gives us the desired hash and we can use this in our configuration.
+#+begin_src nix
+(import (fetchFromGitHub {
+  owner = "jeslie0";
+  repo = "nix-cow";
+  rev = "de73a93328bdcc7dc46c7051d6bf2f59c48e2bf9";
+  sha256 = "1qiw2xaajb8yw2rhdhddxx6pymf21mf5hbwclh7a0gi1wdf16ri3";
+}))
+#+end_src
