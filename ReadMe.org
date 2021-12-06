@@ -54,3 +54,23 @@ This gives us the desired hash and we can use this in our configuration.
   sha256 = "1qiw2xaajb8yw2rhdhddxx6pymf21mf5hbwclh7a0gi1wdf16ri3";
 }))
 #+end_src
+
+* Flakes
+This project is also a nix flake! This makes it very easy to use. You can run the program without even downloading this repository!
+#+begin_src sh
+nix run github:jeslie0/nix-cow
+#+end_src
+
+To add it to a nix flake system, add this flake to your inputs:
+#+begin_src nix
+inputs.nix-cow.url = "github:jeslie0/nix-cow";
+#+end_src
+
+You can then include it in your configuration as:
+#+begin_src nix
+environment.systemPackages = with pkgs;
+  [ ...
+    self.inputs.nix-cow.defaultPackage.${system}
+    ...
+  ];
+#+end_src
